@@ -1,0 +1,136 @@
+<template>
+    <nav>
+        <a href="#" @click="showGroups" v-if="!checkState">
+            <div class="icon">
+                <img src="/static/icon-nav.svg" alt="Sparade Grupper">
+            </div>
+            <div class="tip">
+                <span class="label">Hantera Grupper</span>
+            </div>
+        </a>
+         <a href="#" v-if="checkState" @click="back">
+            <div class="icon">
+                <img src="/static/icon-back.svg" alt="Tillbaka">
+            </div>
+            <div class="tip">
+                <span class="label">Tillbaka</span>
+            </div>
+        </a>
+        <a href="#" @click="remote" v-if="checkState">
+            <div class="icon">
+                <img src="/static/icon-remote.svg" alt="Activate remote">
+            </div>
+            <div class="tip">
+                <span class="label">Fjärrkontroll</span>
+            </div>
+        </a>
+    </nav>
+</template>
+
+<script>
+export default {
+    name: 'wt-menu',
+    data(){
+       return {
+        }
+    },
+    methods: {
+        showGroups(){
+            this.$store.commit(`toggleShowGroups`);
+        },
+        back(){
+            this.$store.commit('toggleState');
+            this.$router.push({name: 'wt-input'});
+        },
+        remote(){
+            console.log(e);
+        }
+    },
+    computed: {
+        checkState(){
+            return this.$store.state.stateOutput;   
+        }
+    }
+}
+</script>
+
+<style>
+
+nav {
+    position: fixed;
+    margin: 2rem 0 0 2rem;
+    width: 16vw;
+    height: 300px;
+    z-index: 9;
+}
+
+nav a {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 0 0 .5rem 0;
+}
+
+nav a .icon {
+    flex: .4;
+    display: flex;
+
+}
+
+nav a .tip {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover .icon img, nav a.active .icon img {
+    background: #EB6A6A;
+}
+
+nav a:active .icon img {
+    background: #222;
+}
+
+nav a img {
+    height: 2rem;
+    width: 2rem;
+    padding: .6rem;
+    border-radius: 999em;
+    background: #95989A;
+}
+
+nav a span.label { 
+    background: #222;
+    position: relative;
+    color: white;
+    padding: .25rem .75rem;
+    border-radius: 2px;
+    display: none;
+}
+
+nav a span.label:after {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(0, 0, 0, 0);
+	border-right-color: #222;
+	border-width: 5px;
+	margin-top: -5px;
+}
+
+nav a:hover span.label {
+    display: block;
+    animation: slide .2s ease;
+}
+
+@keyframes slide {
+    from {  transform: translate3d(2rem,0,0); opacity: 0;   }
+      to {  transform: translate3d(0,0,0); opacity: 1;      }
+}
+
+</style>
