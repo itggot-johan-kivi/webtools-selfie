@@ -279,9 +279,6 @@ function shuffle(array) {
 /* MOBILE */
 @media screen and (max-width:650px) {
 
- #input {
-    
- }
 
 }
 

@@ -8,14 +8,14 @@
             <article class="main">
                 <h1 id="active-name" :class="{ spin: spin}">
                     <section class="slider">
-                        <span class="name" v-for="name in activeGroupie.nameList">{{ name }}</span>
+                        <span class="name" v-for="name in activeGroupie.nameList" :key="name">{{ name }}</span>
                     </section>
                 </h1>
                 <a class="big-btn" @click="getName">Slump me a namn</a>
             </article>
             <article class="right">
                 <ul class="picked-names">
-                    <li v-for="name in pickedNames">{{name}}</li>
+                    <li v-for="name in pickedNames" :key="name">{{name}}</li>
                 </ul>
             </article>
         </section>
