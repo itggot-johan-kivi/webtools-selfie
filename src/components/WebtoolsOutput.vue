@@ -3,7 +3,7 @@
         <wtmenu/>
         <section id="output">
             <article class="left">
-                {{ activeGroupie.nameList.length }} kvar
+                
             </article>
             <article class="main">
                 <h1 id="active-name" :class="{ spin: spin}">
@@ -11,7 +11,9 @@
                         <span class="name" v-for="name in activeGroupie.nameList" :key="name">{{ name }}</span>
                     </section>
                 </h1>
-                <a class="big-btn" @click="getName">Slump me a namn</a>
+                    <a v-if="activeGroupie.nameList.length > 0" class="big-btn" @click="getName">{{ btnText }}</a>
+                    <a v-if="activeGroupie.nameList.length < 1" class="big-btn" @click="resetNames">Restart namn</a>
+                    <p v-if="activeGroupie.nameList.length > 0" class="names-left">{{ activeGroupie.nameList.length }} namn kvar</p>
             </article>
             <article class="right">
                 <ul class="picked-names">
@@ -33,17 +35,21 @@ export default {
     },
     data(){
         return {
-            spin: false
+            spin: false,
+            btnText: `Slump me a namn`
         }
     },
     methods:{
+        resetNames(){
+
+        },
         getName(){
             this.$store.commit(`pickName`);
 
             this.spin = true;
 
             let el = document.querySelector(`.slider`);
-            let timing = el.childElementCount*60;
+            let timing = el.childElementCount*50;
 
             el.style.animationDuration = `${timing}ms`;
             
@@ -126,6 +132,12 @@ flex: 1;
     font-size: 1.2rem;
     font-weight: 300;
     color: rgba(0,0,0,.4);
+
+}
+
+.names-left {
+    color: rgba(0,0,0,.4);
+    font-style: italic;
 }
 
 .right {
@@ -151,21 +163,22 @@ flex: 1;
 .big-btn {
     display: block;
     margin: 4rem 0 0 0;
-    padding: 1rem 3rem;
-    background: #666;
-    color: white;
+    padding: 1rem 2rem;
+    border: 1px solid rgba(0,0,0,.4);
+    color: rgba(0,0,0,.4);
     font-size: 1.2rem;
     border-radius: 3px;
 }
 
 .big-btn:hover {
     cursor: pointer;
-    background: #555;
+    background: rgba(0,0,0,.4);
+    color: white;
 }
 
 .big-btn:active {
     cursor: pointer;
-    background: #222;
+    background: rgba(0,0,0,.8);
 }
 
 </style>
