@@ -6,9 +6,12 @@
                 {{ activeGroupie.nameList.length }} kvar
             </article>
             <article class="main">
-                <h1 id="active-name">{{ activeGroupie.nameList[0] }}</h1>
-                <h2 id="next-name">{{ activeGroupie.nameList[1] }}</h2>
-                <button @click="getName">Select name</button>
+                <h1 id="active-name" :class="{ spin: spin}">
+                    <section class="slider">
+                        <span class="name" v-for="name in activeGroupie.nameList">{{ name }}</span>
+                    </section>
+                </h1>
+                <a class="big-btn" @click="getName">Slump me a namn</a>
             </article>
             <article class="right">
                 <ul class="picked-names">
@@ -30,11 +33,25 @@ export default {
     },
     data(){
         return {
+            spin: false
         }
     },
     methods:{
         getName(){
             this.$store.commit(`pickName`);
+
+            this.spin = true;
+
+            let el = document.querySelector(`.slider`);
+            let timing = el.childElementCount*60;
+
+            el.style.animationDuration = `${timing}ms`;
+            
+            setTimeout(() => {
+                
+                this.spin = false;
+            },timing);
+        
         }
     },
     computed: {
@@ -52,6 +69,13 @@ export default {
 </script>
 
 <style>
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
 
 #output {
     width: 100vw;
@@ -72,8 +96,30 @@ flex: 1;
 }
 
 #active-name {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin: 0;
+    height: 3rem;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+#active-name .slider span {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.spin .slider {
+    animation-name: spin;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from { transform: translate3d(0,0,0);  }
+      to { transform: translate3d(0,-100%,0);  }
 }
 
 #next-name {
@@ -100,6 +146,26 @@ flex: 1;
     margin: 0 0 .25rem 0;
     color: rgba(0,0,0,.4);
     font-size: .7rem;
+}
+
+.big-btn {
+    display: block;
+    margin: 4rem 0 0 0;
+    padding: 1rem 3rem;
+    background: #666;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 3px;
+}
+
+.big-btn:hover {
+    cursor: pointer;
+    background: #555;
+}
+
+.big-btn:active {
+    cursor: pointer;
+    background: #222;
 }
 
 </style>

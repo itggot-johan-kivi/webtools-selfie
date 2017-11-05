@@ -40,6 +40,7 @@ export default {
         },
         back(){
             this.$store.commit('toggleState');
+            this.$store.commit(`cleanPickedNames`);
             this.$router.push({name: 'wt-input'});
         },
         remote(){
