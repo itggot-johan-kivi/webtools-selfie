@@ -13,10 +13,10 @@
                 </h1>
                     <a v-if="activeGroupie.nameList.length > 0" class="big-btn" @click="getName">{{ btnText }}</a>
                     <a v-if="activeGroupie.nameList.length < 1" class="big-btn" @click="resetNames">Restart namn</a>
-                    <p v-if="activeGroupie.nameList.length > 0" class="names-left">{{ activeGroupie.nameList.length }} namn kvar</p>
+                    <p v-if="activeGroupie.excludeName" class="names-left">{{ activeGroupie.nameList.length }} namn kvar</p>
             </article>
             <article class="right">
-                <ul class="picked-names">
+                <ul class="picked-names" v-if="activeGroupie.showPicked">
                     <li v-for="name in pickedNames" :key="name">{{name}}</li>
                 </ul>
             </article>
@@ -42,22 +42,43 @@ export default {
     methods:{
         resetNames(){
 
+           let data = {
+                excludeName: true,
+                showPicked: this.$store.state.activeGroupie.showPicked,
+                nameList: this.$store.state.pickedNames
+            }
+
+            shuffle(data.nameList);
+
+            this.$store.commit('setActiveGroupie', data);
+            this.$store.commit('cleanPickedNames');
+            
+
         },
         getName(){
-            this.$store.commit(`pickName`);
+                if(!this.spin){
+                this.spin = true;
 
-            this.spin = true;
+                let el = document.querySelector(`.slider`);
+                let timing = el.childElementCount*50;
 
-            let el = document.querySelector(`.slider`);
-            let timing = el.childElementCount*50;
-
-            el.style.animationDuration = `${timing}ms`;
+                el.style.animationDuration = `${timing}ms`;
             
-            setTimeout(() => {
+
+                setTimeout(() => {
+                    this.spin = false;
+                },timing);
+
+                if(!this.$store.state.activeGroupie.excludeName){
+
+                    this.$store.commit(`pickRandName`, timing);
+
+                } else {
                 
-                this.spin = false;
-            },timing);
-        
+                    this.$store.commit(`pickName`, timing);
+                
+                }
+            }
         }
     },
     computed: {
@@ -69,7 +90,21 @@ export default {
             let arr = this.$store.state.pickedNames;
             return arr;
         }
+    },
+    created(){
+        
     }
+};
+
+// Fisher Yates shuffle
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
 };
 
 </script>
@@ -94,7 +129,7 @@ flex: 1;
 }
 
 .main {
-    flex:2;
+    flex:3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,6 +143,7 @@ flex: 1;
     width: 100%;
     text-align: center;
     overflow: hidden;
+    color: white;
 }
 
 #active-name .slider span {
@@ -131,12 +167,11 @@ flex: 1;
 #next-name {
     font-size: 1.2rem;
     font-weight: 300;
-    color: rgba(0,0,0,.4);
-
+    color: rgba(0,0,0,.6);
 }
 
 .names-left {
-    color: rgba(0,0,0,.4);
+    color: rgba(0,0,0,.6);
     font-style: italic;
 }
 
@@ -156,29 +191,53 @@ flex: 1;
 .picked-names li {
     text-align: right;
     margin: 0 0 .25rem 0;
-    color: rgba(0,0,0,.4);
-    font-size: .7rem;
+    color: rgba(0,0,0,.6);
+    font-size: .9rem;
+    animation: fade .3s ease;
 }
+
+@keyframes fade {
+    from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+}
+
 
 .big-btn {
     display: block;
     margin: 4rem 0 0 0;
     padding: 1rem 2rem;
-    border: 1px solid rgba(0,0,0,.4);
-    color: rgba(0,0,0,.4);
+    border: 1px solid rgba(0,0,0,.6);
+    color: rgba(0,0,0,.6);
     font-size: 1.2rem;
     border-radius: 3px;
 }
 
 .big-btn:hover {
     cursor: pointer;
-    background: rgba(0,0,0,.4);
+    background: rgba(0,0,0,.8);
     color: white;
 }
 
 .big-btn:active {
     cursor: pointer;
-    background: rgba(0,0,0,.8);
+    background: rgba(0,0,0,1);
+}
+
+@media screen and (max-width:640px ) {
+    .container {
+
+    }
+
+    .left, .right {
+        display: none;
+    }
+
+    .big-btn {
+        position: absolute;
+        padding: 1rem 4rem;
+        bottom:40px;
+    }
+
 }
 
 </style>

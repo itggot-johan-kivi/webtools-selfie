@@ -41,23 +41,32 @@ export default {
             this.closeOverlay();
         },
         removeListItem(index){
-            let q = confirm(`Reeeeeally?`);
+            let q = confirm(`Vill du verkligen ta bort gruppen?`);
             if(q !== false){
                 this.$store.commit(`removeGroup`, index);
             }
         },
         saveGroup(){
-            let name = prompt(`Döp gruppen`);
+
+            if(this.$store.state.nameList.length > 1){
+
+                let name = prompt(`Döp gruppen`);
+                
                 if (name !== null) {
 
-                let obj = {
-                    groupName: name,
-                    groupMembers: this.$store.state.nameList
+                    let obj = {
+                        groupName: name,
+                        groupMembers: this.$store.state.nameList
+                    }
+
+                    this.$store.commit(`updateGroupieObj`, obj);     
+            
                 }
 
-                this.$store.commit(`updateGroupieObj`, obj);     
-            
+            } else {
+                alert(`Textrutan är tom!`);
             }
+
        },
         closeOverlay(){
             this.$store.commit(`toggleShowGroups`);
@@ -72,6 +81,7 @@ export default {
 </script>
 
 <style>
+
 aside#overlay {
     position: absolute;
     width: 100vw;
@@ -82,13 +92,14 @@ aside#overlay {
 }
 
 aside#overlay a#close {
-    display: inline-block;
+    display: block;
     width: 2rem;
     height: 2rem;
     background: rgba(255,255,255,.8);
     padding: .6rem;
     margin: 2rem;
     border-radius: 999em;
+    position: absolute;
 }
 
 aside#overlay a#close:hover {
@@ -98,7 +109,6 @@ aside#overlay a#close:hover {
 
 aside#overlay .centercontainer {
     margin: auto;
-    max-width: 900px;
 }
 
 
@@ -124,7 +134,7 @@ aside#overlay a#add-group:hover {
 .remove-group {
     display: inline-block;
     margin: .75rem 0 0 0;
-    padding: 3px;
+    padding: 3px 6px;
     text-decoration: none;
     color: rgba(255,255,255,.6);
 }
@@ -140,7 +150,7 @@ aside#overlay a#add-group:hover {
 
 aside#overlay .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(240px, auto));
     grid-auto-rows: 120px;
     grid-gap: 1rem;
 }
@@ -159,7 +169,7 @@ aside#overlay article h1 {
     color: white;
     margin: 0;
     padding: 0;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }
 
 aside#overlay article h2 {
@@ -167,6 +177,25 @@ aside#overlay article h2 {
     margin: 0;
     padding: 0;
     font-weight: 200;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
+
+@media screen and (max-width:640px ) {
+
+    #overlay {
+        overflow: hidden;
+    }
+
+    #overlay .centercontainer {
+        width: 90vw;
+        padding: 8rem 0 0 0;
+        box-sizing: border-box;
+    }
+
+    #overlay .grid-container {
+        grid-template-columns: repeat(1,1fr);
+    }
+    
+}
+
 </style>

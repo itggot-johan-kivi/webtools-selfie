@@ -16,7 +16,8 @@
                 <span class="label">Tillbaka</span>
             </div>
         </a>
-        <a href="#" @click="remote" v-if="checkState">
+        <!--
+            <a href="#" @click="remote" v-if="checkState">
             <div class="icon">
                 <img src="/static/icon-remote.svg" alt="Activate remote">
             </div>
@@ -24,6 +25,7 @@
                 <span class="label">Fjärrkontroll</span>
             </div>
         </a>
+        -->
     </nav>
 </template>
 
@@ -43,7 +45,7 @@ export default {
             this.$store.commit(`cleanPickedNames`);
             this.$router.push({name: 'wt-input'});
         },
-        remote(){
+        remote(e){
             console.log(e);
         }
     },
@@ -60,7 +62,7 @@ export default {
 nav {
     position: fixed;
     margin: 2rem 0 0 2rem;
-    width: 16vw;
+    width: 220px;
     height: 300px;
     z-index: 9;
 }
@@ -69,7 +71,7 @@ nav a {
     display: flex;
     flex: 1;
     align-items: center;
-    margin: 0 0 .5rem 0;
+    margin: 0 0 .75rem 0;
 }
 
 nav a .icon {
@@ -85,11 +87,11 @@ nav a .tip {
 }
 
 nav a:hover .icon img, nav a.active .icon img {
-    background: #EB6A6A;
+    background: rgba(255,255,255,1);
 }
 
 nav a:active .icon img {
-    background: #222;
+    background: rgba(255,255,255,1);
 }
 
 nav a img {
@@ -97,11 +99,11 @@ nav a img {
     width: 2rem;
     padding: .6rem;
     border-radius: 999em;
-    background: #95989A;
+    background: rgba(255,255,255,.8);
 }
 
 nav a span.label { 
-    background: #222;
+    background: #4B4A57;
     position: relative;
     color: white;
     padding: .25rem .75rem;
@@ -119,7 +121,7 @@ nav a span.label:after {
 	position: absolute;
 	pointer-events: none;
 	border-color: rgba(0, 0, 0, 0);
-	border-right-color: #222;
+	border-right-color: #4B4A57;
 	border-width: 5px;
 	margin-top: -5px;
 }
@@ -130,7 +132,7 @@ nav a:hover span.label {
 }
 
 @keyframes slide {
-    from {  transform: translate3d(2rem,0,0); opacity: 0;   }
+    from {  transform: translate3d(30px,0,0); opacity: 0;   }
       to {  transform: translate3d(0,0,0); opacity: 1;      }
 }
 

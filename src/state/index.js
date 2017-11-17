@@ -21,11 +21,28 @@ export default new Vuex.Store({
       arr.splice(index, 1);
       localStorage.setItem('groupie', JSON.stringify(arr));
     },
-    pickName(state){
+    pickName(state, timing){
+      
       let activeGroupie = this.state.activeGroupie;
-      let firstName = activeGroupie.nameList.shift();
-      this.state.pickedNames.push(firstName);
-      this.state.activeGroupie = activeGroupie;
+      activeGroupie.nameList.shift();
+
+      setTimeout(()=>{  
+        this.state.pickedNames.push(activeGroupie.nameList[0]);
+        this.state.activeGroupie = activeGroupie;
+      },timing);
+    
+    },
+    pickRandName(state, timing){
+    
+      let activeGroupie = this.state.activeGroupie;
+    
+      shuffle(activeGroupie.nameList)
+    
+      setTimeout(()=>{
+        this.state.pickedNames.push(activeGroupie.nameList[0]);
+        this.state.activeGroupie = activeGroupie;  
+      },timing);
+    
     },
     cleanPickedNames(state){
       this.state.pickedNames = [];
@@ -50,3 +67,14 @@ export default new Vuex.Store({
     }
   }
 });
+
+// Fisher Yates shuffle
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+};

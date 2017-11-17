@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         go(){
-
+    
             let data = {
                 excludeName: this.excludeName,
                 showPicked: this.showPicked,
@@ -42,6 +42,9 @@ export default {
             }
 
             shuffle(data.nameList);
+            
+            // Add one empty
+            data.nameList.splice(0,1,``);
 
             this.$store.commit('toggleState');
             this.$store.commit('setActiveGroupie', data);
@@ -107,12 +110,12 @@ function shuffle(array) {
     "name-list name-list"
     "group-name group-name"
     "group-leader group-leader"
-    "create-groups create-groups" !important;
+    "create-groups create-groups";
 }
 
 #input .group-length {
         grid-area: group-length;
-        color: rgba(0,0,0,.4);
+        color: rgba(255,255,255,.8);
         padding: 1rem .5rem;
         font-size: .8rem;
 }
@@ -125,7 +128,8 @@ function shuffle(array) {
     box-sizing: border-box;
     font-size: .8rem;
     line-height: 30px;
-    height: 360px;
+    height: 361px;
+    width: 400px;
     background: #fff url('/static/row.png');
     background-attachment: local;
     border-top-left-radius: 3px;
@@ -140,7 +144,7 @@ function shuffle(array) {
 
 #input .group-name {
     grid-area: group-name;
-    background: rgba(0,0,0,.1);
+    background: #E6E6E6;
     display: flex;
     box-sizing: border-box;
     align-items: center;
@@ -149,7 +153,7 @@ function shuffle(array) {
 
 #input .group-leader {
     grid-area: group-leader;
-    background: rgba(0,0,0,.2);
+    background: #DBDBDB;
     display: flex;
     align-items: center;
     padding: 0 0 0 1rem;
@@ -158,19 +162,19 @@ function shuffle(array) {
 #input-group-name, #input-group-leader {
     width: 1.2rem;
     height: 1.2rem;
-    border: 1px solid rgba(0,0,0,.6);
+    border: 1px solid #4B4A57;
     border-radius: 3px;
     margin: 0 1rem 0 0;
 }
 
 #input-group-name.selected, #input-group-leader.selected {
-    background: #222 url('/static/icon-close-white.svg') no-repeat;
+    background: #4B4A57 url('/static/icon-close-white.svg') no-repeat;
     background-size: 100%;
 }
 
 #input #group-style-members {
     grid-area: group-style-members;
-    background: rgba(0,0,0,.3);
+    background: #4B4A57;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -180,7 +184,7 @@ function shuffle(array) {
 
 #input #group-style-groups {
     grid-area: group-style-groups;
-    background: rgba(0,0,0,.3);
+    background: #4B4A57;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,7 +197,7 @@ function shuffle(array) {
 }
 
 #group-style-members.selected, #group-style-groups.selected {
-    background: rgb(80, 80, 80) !important;
+    background: #4B4A57 !important;
     color: rgba(255,255,255,.8);
 }
 
@@ -212,50 +216,9 @@ function shuffle(array) {
 	margin-left: -6px;
 }
 
-
-#input .group-scale {
-    grid-area: scale;
-    background: rgba(0,0,0,.4);
-}
-
-#input .group-scale #scale {
-    list-style: none;
-    display: flex;
-    height: 40px;
-    margin: 0 0.5rem;
-    padding: 0;
-}
-
-#input .group-scale #scale li {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .8rem;
-}
-
-#input .group-scale #scale li span {
-    display: block;
-    width: 17px;
-    padding: 2px;
-    text-align: center;
-    border-radius: 999rem;
-}
-
-#input .group-scale #scale li span:hover {
-    background: rgba(255,255,255,.2);
-    cursor: pointer;
-}
-
-#input .group-scale #scale li span.selected {
-    background: #444;
-    color: white;
-}
-
-
 #input #create-groups {
     grid-area: create-groups;
-    background: rgba(0,0,0,.7);
+    background: #4B4A57; 
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     color: rgba(255,255,255,.9);
@@ -268,13 +231,12 @@ function shuffle(array) {
 }
 
 #input #create-groups:hover {
-    background: rgba(0,0,0,.8);
+    background: #313039;
 }
 
 #input #create-groups:active {
     background: rgba(0,0,0,1);
 }
-
 
 /* MOBILE */
 @media screen and (max-width:650px) {

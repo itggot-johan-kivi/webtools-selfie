@@ -46,7 +46,7 @@ body, html {
     font-weight: 400;
     font-style: normal;
     font-size: .9em;
-    background: #eee;
+    background: #E26A6A;
     overflow-x: hidden;
     width: 100vw;
     height: 100vh;
