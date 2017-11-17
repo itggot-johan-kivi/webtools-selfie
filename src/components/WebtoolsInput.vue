@@ -44,7 +44,7 @@ export default {
             shuffle(data.nameList);
             
             // Add one empty
-            data.nameList.splice(0,1,``);
+           // data.nameList.splice(0,1,``);
 
             this.$store.commit('toggleState');
             this.$store.commit('setActiveGroupie', data);

@@ -17,7 +17,7 @@
             </article>
             <article class="right">
                 <ul class="picked-names" v-if="activeGroupie.showPicked">
-                    <li v-for="name in pickedNames" :key="name">{{name}}</li>
+                    <li v-for="(name, index) in pickedNames" :key="index">{{name}}</li>
                 </ul>
             </article>
         </section>
@@ -92,7 +92,7 @@ export default {
         }
     },
     created(){
-        
+        this.$store.commit(`setPickedName`);
     }
 };
 

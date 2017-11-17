@@ -47,6 +47,10 @@ export default new Vuex.Store({
     cleanPickedNames(state){
       this.state.pickedNames = [];
     },
+    setPickedName(state){
+      let activeGroupie = this.state.activeGroupie;
+      this.state.pickedNames.push(activeGroupie.nameList[0]);
+    },
     updateGroupieObj(state, data){
       let arr = this.state.groupieObj;
       arr.push(data);
