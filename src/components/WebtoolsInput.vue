@@ -14,17 +14,20 @@
         </div> 
         <a href="#" @click="go" id="create-groups">Slump me some namn</a>
     </section>
+    <social/>
     </div>
 </template>
 
 <script>
 
 import wtmenu from '@/components/Menu';
+import social from '@/components/Social';
 
 export default {
     name: 'wt-input',
     components: {
-        wtmenu
+        wtmenu,
+        social
     },
     data() {
         return {
