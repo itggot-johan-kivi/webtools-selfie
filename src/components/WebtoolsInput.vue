@@ -34,22 +34,24 @@ export default {
     },
     methods: {
         go(){
-    
-            let data = {
-                excludeName: this.excludeName,
-                showPicked: this.showPicked,
-                nameList: this.$store.state.nameList
+            if(this.$store.state.nameList.length > 1){
+                
+                let data = {
+                    excludeName: this.excludeName,
+                    showPicked: this.showPicked,
+                    nameList: this.$store.state.nameList
+                }
+
+                shuffle(data.nameList);
+
+                this.$store.commit('toggleState');
+                this.$store.commit('setActiveGroupie', data);
+                this.$router.push({name: 'wt-output'});
+            
+            } else {
+                alert(`Skriv några fler namn.`);
             }
 
-            shuffle(data.nameList);
-            
-            // Add one empty
-           // data.nameList.splice(0,1,``);
-
-            this.$store.commit('toggleState');
-            this.$store.commit('setActiveGroupie', data);
-            this.$router.push({name: 'wt-output'});
-            
         },
         validateList(){
             let list = this.$store.state.nameList;
