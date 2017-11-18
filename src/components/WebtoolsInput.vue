@@ -226,7 +226,7 @@ function shuffle(array) {
     background: #4B4A57; 
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    color: rgba(255,255,255,.9);
+    color: rgba(255,255,255,1);
     text-decoration: none;
     font-size: 1.6rem;
     font-weight: 700;
