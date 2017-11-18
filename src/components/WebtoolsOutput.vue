@@ -93,6 +93,10 @@ export default {
     },
     created(){
         this.$store.commit(`setPickedName`);
+
+        if(localStorage[`webtools-remote`]){
+            this.$store.commit(`setRemoteCode`, localStorage.getItem(`webtools-remote`));
+        }
     }
 };
 

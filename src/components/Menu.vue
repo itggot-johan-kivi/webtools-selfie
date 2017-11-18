@@ -16,8 +16,7 @@
                 <span class="label">Tillbaka</span>
             </div>
         </a>
-        <!--
-            <a href="#" @click="remote" v-if="checkState">
+            <a href="#" @click="remote" v-if="checkState" :class="{ active: remoteActive}">
             <div class="icon">
                 <img src="/static/icon-remote.svg" alt="Activate remote">
             </div>
@@ -25,7 +24,6 @@
                 <span class="label">Fjärrkontroll</span>
             </div>
         </a>
-        -->
     </nav>
 </template>
 
@@ -45,13 +43,21 @@ export default {
             this.$store.commit(`cleanPickedNames`);
             this.$router.push({name: 'wt-input'});
         },
-        remote(e){
-            console.log(e);
+        remote(){
+            if(this.$store.state.remote.code.length < 1){
+                let code = prompt(`Skriv in en kod som kopplar ihop dig med fjärrkontrollen.`);
+                this.$store.commit('setRemoteCode', code);
+            } else {
+                this.$store.commit('toggleRemote');
+            }
         }
     },
     computed: {
         checkState(){
             return this.$store.state.stateOutput;   
+        },
+        remoteActive(){
+            return this.$store.state.remote.active;
         }
     }
 }
@@ -73,6 +79,7 @@ nav a {
     align-items: center;
     margin: 0 0 .75rem 0;
 }
+
 
 nav a .icon {
     flex: .4;

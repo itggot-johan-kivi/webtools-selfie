@@ -10,7 +10,11 @@ export default new Vuex.Store({
     nameList: [],
     stateOutput: false,
     activeGroupie: {},
-    pickedNames: []
+    pickedNames: [],
+    remote: {
+      active: false,
+      code: ``
+    }
   },
   mutations: {
     setGroupieObj(state, data){
@@ -25,7 +29,7 @@ export default new Vuex.Store({
       
       let activeGroupie = this.state.activeGroupie;
       activeGroupie.nameList.shift();
-
+      
       setTimeout(()=>{  
         this.state.pickedNames.push(activeGroupie.nameList[0]);
         this.state.activeGroupie = activeGroupie;
@@ -37,7 +41,7 @@ export default new Vuex.Store({
       let activeGroupie = this.state.activeGroupie;
     
       shuffle(activeGroupie.nameList)
-    
+
       setTimeout(()=>{
         this.state.pickedNames.push(activeGroupie.nameList[0]);
         this.state.activeGroupie = activeGroupie;  
@@ -68,6 +72,13 @@ export default new Vuex.Store({
     },
     setActiveGroupie(state, obj){
       this.state.activeGroupie = obj;
+    },
+    toggleRemote(state){
+      this.state.remote.active = !this.state.remote.active;
+    },
+    setRemoteCode(state, code){
+      localStorage.setItem(`webtools-remote`, code);
+      this.state.remote.code = code;
     }
   }
 });
