@@ -24,12 +24,10 @@ let app = new Vue({
   store,
   sockets:{
       connect() {
-          console.log('socket connected')
+          console.log('socket connected');
       },
       pickNameRemote(val){
-        if(this.$store.state.remote.code === val.room && this.$store.state.remote.active ){
           app.$children[0].$children[0].getName();
-        }
       }
   },
   template: '<App/>',

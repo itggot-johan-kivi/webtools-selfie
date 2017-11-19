@@ -10,10 +10,12 @@ export default new Vuex.Store({
     nameList: [],
     stateOutput: false,
     activeGroupie: {},
+    remoteState: false,
     pickedNames: [],
     remote: {
       active: false,
-      code: ``
+      code: ``,
+      modal: false
     }
   },
   mutations: {
@@ -76,9 +78,8 @@ export default new Vuex.Store({
     toggleRemote(state){
       this.state.remote.active = !this.state.remote.active;
     },
-    setRemoteCode(state, code){
-      localStorage.setItem(`webtools-remote`, code);
-      this.state.remote.code = code;
+    toggleRemoteModal(state){
+      this.state.remote.modal = !this.state.remote.modal;
     }
   }
 });

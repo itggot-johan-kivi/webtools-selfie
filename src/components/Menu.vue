@@ -44,12 +44,7 @@ export default {
             this.$router.push({name: 'wt-input'});
         },
         remote(){
-            if(this.$store.state.remote.code.length < 1){
-                let code = prompt(`Skriv in en kod som kopplar ihop dig med fjärrkontrollen.`);
-                this.$store.commit('setRemoteCode', code);
-            } else {
-                this.$store.commit('toggleRemote');
-            }
+            this.$store.commit('toggleRemoteModal');
         }
     },
     computed: {

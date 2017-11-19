@@ -5,6 +5,10 @@
       <overlay v-if="showOverlay"/>
     </transition>
 
+    <transition name="fade">
+      <remote v-if="showRemote"/>
+    </transition>
+
     <transition name="zoom">
       <router-view/>
     </transition>
@@ -16,6 +20,7 @@
 
 
 import overlay from '@/components/Groups'
+import remote from '@/components/RemoteOverlay'
 
 export default {
   name: 'app',
@@ -25,10 +30,14 @@ export default {
   computed: {
     showOverlay(){ 
       return this.$store.state.showGroups;
+    },
+    showRemote(){
+      return this.$store.state.remote.modal;
     }
   },
   components: {
-    overlay
+    overlay,
+    remote
   }
 }
 </script>
